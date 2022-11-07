@@ -59,23 +59,14 @@ def other_player(player):
     elif player == "0": return "X"
     else: return 'player given is not X or 0'
 
-# print board in vertical alignment for easier view
-def board_view(board):
-    line1 = str(board[0])
-    line2 = str(board[1])
-    line3 = str(board[2])
-    output = line1 + "\n" + line2 + "\n" + line3
-    return output
-
-
+# return true if number is less than 0 or larger than 2, check out of bound error
 def numIsNotValid(num):
-    return(num < 1 or num > 3)
+    return(num < 0 or num > 2)
 
 def checkError(board, row, col):
     # chekc error and output a error message
-    msg = None
     if numIsNotValid(row) or numIsNotValid(col):
-        msg = "Please input 1, 2, or 3 for row and column number."
+        return "Please input 1, 2, or 3 for row and column number."
     if board[row][col]:
-        msg = "This spot is already taken! Pick another spot!"
-    return msg
+        return "This spot is already taken! Pick another spot!"
+    return None
