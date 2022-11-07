@@ -18,20 +18,22 @@ if __name__ == '__main__':
         # show the board to the user
         print(player + ",take a turn!\n" + board_view(board))
         # input a move from the player
-        print("which row (horizontal)?")
+        print("Which row (horizontal)? Please input 1, 2 or 3")
         row = int(input())-1
-        print("Which column (vertical)?")
+        print("Which column (vertical)? Please input 1, 2, 3")
         col = int(input())-1
         msg = logic.checkError(board, row, col)
-        if msg:
+        if msg: # if error message exist, print and continue
             print(msg)
             continue
         # update the board
         board[row][col] = player
-        if turn > 4: #start evaluate winner
+
+        if turn > 4: #start evaluate winner after 4 turns
             winner = logic.get_winner(board)
-        if turn == 9 and winner == None: #give it a stop
+        if turn == 9 and winner == None: # give it a stop at turn 9
             break
+        # update counter
         player = logic.other_player(player)
         turn += 1
             

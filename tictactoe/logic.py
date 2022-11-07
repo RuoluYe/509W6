@@ -59,12 +59,12 @@ def other_player(player):
     elif player == "0": return "X"
     else: return 'player given is not X or 0'
 
-# return true if number is less than 0 or larger than 2, check out of bound error
 def numIsNotValid(num):
+    """return true if number is less than 0 or larger than 2, check out of bound error"""
     return(num < 0 or num > 2)
 
 def checkError(board, row, col):
-    # chekc error and output a error message
+    """ chekc error and return a error message"""
     if numIsNotValid(row) or numIsNotValid(col):
         return "Please input 1, 2, or 3 for row and column number."
     if board[row][col]:
