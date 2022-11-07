@@ -55,9 +55,9 @@ def get_winner(board):
 
 def other_player(player):
     """Given the character for a player, returns the other player."""
+    assert player == "X" or player == "0", "Player must be 'X' or '0'"
     if player == "X": return "0" 
-    elif player == "0": return "X"
-    else: return 'player given is not X or 0'
+    else: return "X"
 
 def numIsNotValid(num):
     """return true if number is less than 0 or larger than 2, check out of bound error"""
