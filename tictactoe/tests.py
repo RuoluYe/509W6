@@ -1,6 +1,6 @@
 import unittest
 import logic
-import game
+from game import *
 
 class TestLogic(unittest.TestCase):
     # def test_get_winner(self):
@@ -54,7 +54,7 @@ class TestLogic(unittest.TestCase):
     #     self.assertEqual(logic.checkError(board,row,col), None)
         
     def test_board_check_winner(self):
-        b = game.Game(1)
+        b = Game()
         b.board.set(0,0,'X')
         b.board.set(1,1, 'X')
         b.board.set(2,2, 'X')
@@ -63,19 +63,23 @@ class TestLogic(unittest.TestCase):
             # ['X', None, none],
             # [None, 'X', none],
             # [none, none, x],
-        b = game.Game(1)
+        b = Game()
         b.board.set(1,1, '0')
         b.board.set(1,0, '0')
         b.board.set(1,2, '0')
         b.check_winner()
         self.assertEqual(b.winner, "0")
-        b = game.Game(1)
+        b = Game()
         b.board.set(0,0, '0')
         b.board.set(1,0, '0')
         b.board.set(2,0, '0')
         b.check_winner()
         self.assertEqual(b.winner, "0")
         
+    def test_get_position(self):
+        b = singleGame()
+        self.assertEqual(b.get_position(), [1,1])# input 1, 1
+        self.assertEqual(b.get_position(), [2,2])# input 2, 2
 
 
         
