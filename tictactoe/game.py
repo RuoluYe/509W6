@@ -59,6 +59,9 @@ class Game:
         if (x not in nums) or (y not in nums):
             print("Please only enter 1,2, or 3 for your x & y input.")
             return self.get_position()
+        if (self.board.is_filled(x-1,y-1)):
+            print("Spot taken, please re-select!")
+            return self.get_position()
         return [x, y]
 
 
@@ -94,8 +97,6 @@ class doubleGame(Game):
             print(self.currentPlayer + ", your turn")
             
             positions = self.get_position()
-            # while self.board.is_filled(positions[0] - 1,positions[1] - 1):
-            #     positions = self.get_position()
             x, y = positions[0], positions[1]
             print(f"{self.currentPlayer} chose {positions[0]}, {positions[1]}")
             
@@ -146,7 +147,7 @@ class singleGame(Game):
                 positions = self.get_position()
                 x = positions[0]
                 y = positions[1] 
-                print(f"You chose {x}, {y}")
+                print(f"You chose [{x}, {y}]")
             
                 self.board.set(x - 1, y - 1, self.player1.id)
                 print(self.board) 
