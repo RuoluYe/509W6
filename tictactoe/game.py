@@ -6,10 +6,8 @@ class Game:
     def __init__(self):
         self.board = Board()
         self.player1 = Human("X")
-        self.player2 = None
         self.winner = None
         self.turn = 0
-        self.currentPlayer = random.choice([self.player1, self.player2])
         
     def set_winner(self, player):
         if self.winner == None:
@@ -18,39 +16,39 @@ class Game:
             print("!!!Multiple winner Error!!!")
 
     def check_winner(self):
-        while self.winner == None:
-            for i in range(3):
-                thisRow = self.board.get_row(i)
-                
-                player = thisRow[0]
-                if player == None:
-                    continue
-                if thisRow[0] == thisRow[1] and thisRow[0] == thisRow[2]:
-                    self.set_winner(player)
-                    break
-            if self.winner != None: break
-                    
-            for i in range(3):
-                thisCol = self.board.get_col(i)
-                player = thisCol[0]
-                if player == None:
-                    continue
-                if thisCol[0] == thisCol[1] and thisCol[0] == thisCol[2]:
-                    self.set_winner(player)
-                    break
-            if self.winner != None: break
-           
-            player = self.board.get(1,1)
+        print("beginning check winner for turn" + str(self.turn))
+        for i in range(3):
+            print("checking row" + str(i))
+            thisRow = self.board.get_row(i)
+            
+            player = thisRow[0]
             if player == None:
-                break
-            diag1 = [self.board.get(0,0), self.board.get(2,2)]
-            if diag1[0] == player and diag1[1] == player:
+                continue
+            if thisRow[0] == thisRow[1] and thisRow[0] == thisRow[2]:
                 self.set_winner(player)
-                break
-            diag2 = [self.board.get(2,0), self.board.get(0,2)]
-            if diag2[0] == player and diag2[1] == player:
+                print("got winner!" + str(self.winner))
+                return True
+                
+        for i in range(3):
+            thisCol = self.board.get_col(i)
+            player = thisCol[0]
+            if player == None:
+                continue
+            if thisCol[0] == thisCol[1] and thisCol[0] == thisCol[2]:
                 self.set_winner(player)
-                break
+                return True
+        
+        player = self.board.get(1,1)
+        if player == None:
+            return False
+        diag1 = [self.board.get(0,0), self.board.get(2,2)]
+        if diag1[0] == player and diag1[1] == player:
+            self.set_winner(player)
+            return True
+        diag2 = [self.board.get(2,0), self.board.get(0,2)]
+        if diag2[0] == player and diag2[1] == player:
+            self.set_winner(player)
+            return True
     
     def get_position(self):
         x = int(input("which coloumn? left(1), middle(2), or right(3): "))
@@ -70,6 +68,10 @@ class Game:
 class Player():
     def __init__(self, id) :
         self.id = id
+    
+    def __str__(self):
+        return str(self.id)
+
     def other_player(self):
         """Given the character for a player, returns the other player."""
         assert self.id == "X" or self.id == "0", "Player must be 'X' or '0'"
@@ -82,26 +84,28 @@ class Human(Player):
     pass
         
 class Bot(Player):
-    pass
+    def bot_move(self, b: Board()):
+        spots = b.get_empty_spot()
+        return random.choice(spots)
 
 class doubleGame(Game):
     def __init__(self):
         super().__init__()
         self.player2 = Human("0")
+        self.currentPlayer = random.choice([self.player1, self.player2])
     
     def start(self):
         while self.winner is None:
             self.turn += 1
             print(self.board)
             
-            print(self.currentPlayer + ", your turn")
+            print(str(self.currentPlayer) + ", your turn")
             
             positions = self.get_position()
             x, y = positions[0], positions[1]
             print(f"{self.currentPlayer} chose {positions[0]}, {positions[1]}")
             
             self.board.set(x - 1, y - 1, self.currentPlayer.id)
-            print(self.board)
             
             self.currentPlayer.other_player()
             
@@ -111,6 +115,7 @@ class doubleGame(Game):
                 break
         
         if self.winner:
+            print(self.board)
             print("We have a winner, " + self.winner + "!")
         else:
             print("There is a tie")
@@ -121,28 +126,17 @@ class singleGame(Game):
         self.player2 = Bot("0")
         self.human_turn = random.choice([True, False])
     
-    def get_empty_spot(self):
-        spots = []
-        for y in range(3):
-            for x in range(3):
-                if self.board.get(x,y) is None:
-                    spots.append([x,y])
-        return spots
-
-    def bot_move(self):
-        spots = self.get_empty_spot()
-        return random.choice(spots)
     
     def start(self):
         while self.winner is None:
             self.turn += 1
             if not self.human_turn:
-                botMove = self.bot_move()
+                botMove = self.player2.bot_move(self.board)
                 self.board.set(botMove[0], botMove[1], "0") # Bot.id
                 print(f"Bot move to {botMove[0]+1},{botMove[1]+1}") 
                 print(self.board)
             else:
-                print("Your turn now!")
+                print("Your turn now! (((" + str(self.winner))
                 
                 positions = self.get_position()
                 x = positions[0]
@@ -153,13 +147,13 @@ class singleGame(Game):
                 print(self.board) 
         
             if self.turn > 3:
-                    self.check_winner()
+                self.check_winner()
             if self.turn == 9 and self.winner is None:
-                    break
+                break
             self.human_turn = not self.human_turn
 
             
         if self.winner:
-            print("We have a winner, " + self.winner + "!")
+            print("We have a winner, " + str(self.winner) + "!")
         else:
             print("There is a tie")
