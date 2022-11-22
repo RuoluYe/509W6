@@ -22,20 +22,19 @@ class Board:
     def get(self, x: int, y: int):
         return self._rows[y][x]
 
-    def isFilled(self, x, y):
+    def is_filled(self, x, y):
         if self.get(x,y) is None:
             return False
         return True
 
     def set(self, x: int, y: int, value):
         self._rows[y-1][x-1] = value
-
-
-    def get_winner(self):
-        """Return the winner, if no one wins, return None"""
-        n = len(self._rows)
-        for x in range(n):
-            player = self.get(x,0)
-            if player == self.get(x,1) and self.get(x,2) == player:
-                return player
+        
+    def get_row(self, row: int):
+        return self._rows[row]
+    
+    def get_col(self, col: int): 
+        # col = 1,2,or 3 for first,second or third column
+        b = self._rows
+        return [b[0][col], b[1][col], b[2][col]]
     
