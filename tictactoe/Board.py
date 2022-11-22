@@ -23,8 +23,7 @@ class Board:
         return self._rows[y][x]
 
     def is_filled(self, x, y):
-        if self.get(x,y) is not None:
-            print("Spot Taken! Please re-select:")
+        if self.get(x,y) is None:
             return False
         return True
 
