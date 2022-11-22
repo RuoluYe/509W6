@@ -53,11 +53,12 @@ class Game:
                 break
     
     def get_position(self):
-        x, y = "", ""
-        while x not in [1,2,3]:
-            x = int(input("which coloumn? left(1), middle(2), or right(3): "))
-        while y not in [1,2,3]:
-            y = int(input("Which row? up(1), middle(2), or down(3): "))
+        x = int(input("which coloumn? left(1), middle(2), or right(3): "))
+        y = int(input("Which row? up(1), middle(2), or down(3): "))
+        nums = [1,2,3]
+        if (x not in nums) or (y not in nums):
+            print("Please only enter 1,2, or 3 for your x & y input.")
+            return self.get_position()
         return [x, y]
 
 
@@ -93,8 +94,8 @@ class doubleGame(Game):
             print(self.currentPlayer + ", your turn")
             
             positions = self.get_position()
-            while self.board.is_filled(positions[0] - 1,positions[1] - 1):
-                positions = self.get_position()
+            # while self.board.is_filled(positions[0] - 1,positions[1] - 1):
+            #     positions = self.get_position()
             x, y = positions[0], positions[1]
             print(f"{self.currentPlayer} chose {positions[0]}, {positions[1]}")
             
@@ -133,6 +134,7 @@ class singleGame(Game):
     
     def start(self):
         while self.winner is None:
+            self.turn += 1
             if not self.human_turn:
                 botMove = self.bot_move()
                 self.board.set(botMove[0], botMove[1], "0") # Bot.id
@@ -142,12 +144,11 @@ class singleGame(Game):
                 print("Your turn now!")
                 
                 positions = self.get_position()
-                while self.board.is_filled(positions[0] - 1,positions[1] - 1):
-                    positions = self.get_position()
-                x, y = positions[0], positions[1]
+                x = positions[0]
+                y = positions[1] 
                 print(f"You chose {x}, {y}")
             
-                self.board.set(x - 1, y - 1, self.currentPlayer.id)
+                self.board.set(x - 1, y - 1, self.player1.id)
                 print(self.board) 
         
             if self.turn > 3:
@@ -155,6 +156,7 @@ class singleGame(Game):
             if self.turn == 9 and self.winner is None:
                     break
             self.human_turn = not self.human_turn
+
             
         if self.winner:
             print("We have a winner, " + self.winner + "!")
