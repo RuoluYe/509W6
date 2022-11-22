@@ -38,3 +38,10 @@ class Board:
         b = self._rows
         return [b[0][col], b[1][col], b[2][col]]
     
+    def get_empty_spot(self):
+        spots = []
+        for y in range(3):
+            for x in range(3):
+                if self.get(x,y) is None:
+                    spots.append([x,y])
+        return spots
