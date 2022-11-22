@@ -4,7 +4,6 @@ import random
 
 class Game:
     def __init__(self):
-        self.mode = mode #1 for game bot, 2 for game b/w human
         self.board = Board()
         self.player1 = Human("X")
         self.player2 = None
@@ -82,8 +81,8 @@ class Bot(Player):
     pass
 
 class doubleGame(Game):
-    def __init__(self, mode: int):
-        super().__init__(mode)
+    def __init__(self):
+        super().__init__()
         self.player2 = Human("0")
     
     def start(self):
@@ -115,8 +114,8 @@ class doubleGame(Game):
             print("There is a tie")
         
 class singleGame(Game):
-    def __init__(self, mode: int):
-        super().__init__(mode)
+    def __init__(self):
+        super().__init__()
         self.player2 = Bot("0")
         self.human_turn = random.choice([True, False])
     
@@ -130,7 +129,7 @@ class singleGame(Game):
 
     def bot_move(self):
         spots = self.get_empty_spot()
-        return spots[random.choice(spots)]
+        return random.choice(spots)
     
     def start(self):
         while self.winner is None:
@@ -155,8 +154,9 @@ class singleGame(Game):
                     self.check_winner()
             if self.turn == 9 and self.winner is None:
                     break
+            self.human_turn = not self.human_turn
             
-            if self.winner:
-                print("We have a winner, " + self.winner + "!")
-            else:
-                print("There is a tie")
+        if self.winner:
+            print("We have a winner, " + self.winner + "!")
+        else:
+            print("There is a tie")
