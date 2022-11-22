@@ -18,7 +18,6 @@ class Game:
     def check_winner(self):
         print("beginning check winner for turn" + str(self.turn))
         for i in range(3):
-            print("checking row" + str(i))
             thisRow = self.board.get_row(i)
             
             player = thisRow[0]
@@ -26,7 +25,6 @@ class Game:
                 continue
             if thisRow[0] == thisRow[1] and thisRow[0] == thisRow[2]:
                 self.set_winner(player)
-                print("got winner!" + str(self.winner))
                 return True
                 
         for i in range(3):
