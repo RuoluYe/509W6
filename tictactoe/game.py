@@ -16,7 +16,6 @@ class Game:
             print("!!!Multiple winner Error!!!")
 
     def check_winner(self):
-        print("beginning check winner for turn" + str(self.turn))
         for i in range(3):
             thisRow = self.board.get_row(i)
             
