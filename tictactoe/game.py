@@ -1,6 +1,7 @@
 ### object Game and player
 from Board import Board
 import random
+import pandas as pd
 
 class Game:
     def __init__(self):
@@ -8,6 +9,19 @@ class Game:
         self.player1 = Human("X")
         self.winner = None
         self.turn = 0
+        self.savedGame: pd.DataFrame = self.read_games()
+        
+    def read_games():
+        try:
+            return pd.read_csv("game.csv")
+        except FileNotFoundError:
+            return pd.DataFrame(columns=[
+                "Game ID",
+                "Player f1",
+                "Player 2",
+                "Winner",
+                "Turns taken",
+        ])
         
     def set_winner(self, player):
         if self.winner == None:
@@ -59,7 +73,8 @@ class Game:
             return self.get_position()
         return [x, y]
 
-
+    def update_game(self, winner, filename = "game.csv"):
+        df = pd.read_csv("game.csv")
     
        
 class Player():
@@ -78,9 +93,10 @@ class Player():
             self.id = "X"
         
 class Human(Player):
-    pass
+    name = input("Please input your name:")
         
 class Bot(Player):
+    name = "Bot"
     def bot_move(self, b: Board()):
         spots = b.get_empty_spot()
         return random.choice(spots)
