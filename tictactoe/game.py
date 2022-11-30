@@ -36,6 +36,11 @@ class Game:
         self.add_game()
         self.savedGames.to_csv("game.csv")
         self.savedMoves.to_csv("move.csv")
+        game_num = len(self.savedGames)
+        print("-----------------------------------------------------------------")
+        print(f"You are the number {game_num} player of this TicTacToe game. Thank you!")
+        print("-----------------------------------------------------------------")
+
 
         
         
