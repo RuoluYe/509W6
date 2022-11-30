@@ -7,9 +7,24 @@ class Game:
     def __init__(self):
         self.board = Board()
         self.player1 = Human("X")
+        self.player2 = Human("0")
         self.winner = None
         self.turn = 0
         self.savedGames: pd.DataFrame = self.read_games()
+        self.savedMoves: pd.DataFrame = self.read_moves()
+
+
+    def finishing(self):
+        if self.winner:
+            print(self.board)
+            print("We have a winner, " + str(self.winner) + "!")
+        else:
+            print("There is a tie")
+        self.add_game()
+        self.savedGames.to_csv("game.csv")
+        self.savedMoves.to_csv("move.csv")
+
+        
         
     def read_games():
         try:
@@ -17,7 +32,7 @@ class Game:
         except FileNotFoundError:
             return pd.DataFrame(columns=[
                 "Game ID",
-                "Player f1",
+                "Player 1",
                 "Player 2",
                 "Winner",
                 "Turns taken",
@@ -32,6 +47,14 @@ class Game:
                 "Player",
                 "Position",
             ])
+    def add_game(sel):
+        length = len(self.savedGames)
+        self.savedGames.loc[length] = {
+        "Game ID": length+1,
+        "Player 1": self.player1.name, 
+        "Player 2": self.player2.name, 
+        "Winner": self.winner
+    }
         
     def add_move(self, player, position):
         game_id = len(self.savedGames)
@@ -81,17 +104,7 @@ class Game:
             self.set_winner(player)
             return True
     
-    def get_position(self):
-        x = int(input("which coloumn? left(1), middle(2), or right(3): "))
-        y = int(input("Which row? up(1), middle(2), or down(3): "))
-        nums = [1,2,3]
-        if (x not in nums) or (y not in nums):
-            print("Please only enter 1,2, or 3 for your x & y input.")
-            return self.get_position()
-        if (self.board.is_filled(x-1,y-1)):
-            print("Spot taken, please re-select!")
-            return self.get_position()
-        return [x, y]
+
 
     def update_game(self, winner, filename = "game.csv"):
         games = pd.read_csv(filename)
@@ -121,10 +134,21 @@ class Player():
         
 class Human(Player):
     name = input("Please input your name:")
+    def get_move(self):
+        x = int(input("which coloumn? left(1), middle(2), or right(3): "))
+        y = int(input("Which row? up(1), middle(2), or down(3): "))
+        nums = [1,2,3]
+        if (x not in nums) or (y not in nums):
+            print("Please only enter 1,2, or 3 for your x & y input.")
+            return self.get_position()
+        if (self.board.is_filled(x-1,y-1)):
+            print("Spot taken, please re-select!")
+            return self.get_position()
+        return [x, y]
         
 class Bot(Player):
     name = "Bot"
-    def bot_move(self, b: Board()):
+    def get_move(self, b: Board()):
         spots = b.get_empty_spot()
         return random.choice(spots)
 
@@ -155,12 +179,9 @@ class doubleGame(Game):
             if self.turn == 9 and self.winner is None:
                 break
         
-        if self.winner:
-            print(self.board)
-            print("We have a winner, " + self.winner + "!")
-        else:
-            print("There is a tie")
+ 
         
+ 
 class singleGame(Game):
     def __init__(self):
         super().__init__()
@@ -173,29 +194,26 @@ class singleGame(Game):
         while self.winner is None:
             self.turn += 1
             if not self.human_turn:
-                botMove = self.player2.bot_move(self.board)
-                self.board.set(botMove[0], botMove[1], "0") # Bot.id
-                print(f"Bot move to {botMove[0]+1},{botMove[1]+1}") 
+                move = self.player2.get_move(self.board)
+                print(f"Bot move to {move[0]+1},{move[1]+1}") 
+                
                 print(self.board)
             else:
                 print("Your turn now! (((" + str(self.winner))
+                move = self.player1.get_move()
                 
-                positions = self.get_position()
-                x = positions[0]
-                y = positions[1] 
                 print(f"You chose [{x}, {y}]")
             
-                self.board.set(x - 1, y - 1, self.player1.id)
-                print(self.board) 
+            self.board.set(x - 1, y - 1, self.player1.id)
+            #add move
+            print(self.board) 
         
             if self.turn > 3:
                 self.check_winner()
             if self.turn == 9 and self.winner is None:
                 break
             self.human_turn = not self.human_turn
-
+        #add game
+        
             
-        if self.winner:
-            print("We have a winner, " + str(self.winner) + "!")
-        else:
-            print("There is a tie")
+
