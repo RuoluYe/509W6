@@ -9,7 +9,7 @@ class Game:
         self.player1 = Human("X")
         self.winner = None
         self.turn = 0
-        self.savedGame: pd.DataFrame = self.read_games()
+        self.savedGames: pd.DataFrame = self.read_games()
         
     def read_games():
         try:
@@ -22,7 +22,27 @@ class Game:
                 "Winner",
                 "Turns taken",
         ])
+    def read_moves():
+        try:
+            return pd.read_csv("moves.csv")
+        except FileNotFoundError:
+            return pd.DataFrame(columns=[
+                "Game ID",
+                "Turn",
+                "Player",
+                "Position",
+            ])
         
+    def add_move(self, player, position):
+        game_id = len(self.savedGames)
+        moves = self.read_moves()
+        moves.loc[len(moves)] = {
+            "Game ID": game_id,
+            "Turn": self.turn,
+            "Player": player,
+            "Position": position,
+        }   
+         
     def set_winner(self, player):
         if self.winner == None:
             self.winner = player
@@ -74,7 +94,14 @@ class Game:
         return [x, y]
 
     def update_game(self, winner, filename = "game.csv"):
-        df = pd.read_csv("game.csv")
+        games = pd.read_csv(filename)
+        games.loc[len(games)]= {
+        "Game ID": len(games)+1,
+        "Player 1": self.player1, 
+        "Player 2": self.player2, 
+        "Winner": winner
+    }
+        
     
        
 class Player():
@@ -100,6 +127,7 @@ class Bot(Player):
     def bot_move(self, b: Board()):
         spots = b.get_empty_spot()
         return random.choice(spots)
+
 
 class doubleGame(Game):
     def __init__(self):
@@ -138,6 +166,7 @@ class singleGame(Game):
         super().__init__()
         self.player2 = Bot("0")
         self.human_turn = random.choice([True, False])
+    
     
     
     def start(self):
