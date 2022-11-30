@@ -10,8 +10,8 @@ class Game:
         self.turn = 0
         self.savedGames: pd.DataFrame = self.read_games()
         self.savedMoves: pd.DataFrame = self.read_moves()
-        self.player1 = Bot()
-        self.player2 = Bot()
+        self.player1 = Bot("X")
+        self.player2 = Bot("0")
         self.currentPlayer = self.player1
 
     def other_player(self):
@@ -41,7 +41,7 @@ class Game:
         
     def read_games(self):
         try:
-            return pd.read_csv("game.csv")
+            return pd.read_csv("game.csv", index_col = 0)
         except FileNotFoundError:
             return pd.DataFrame(columns=[
                 "Game ID",
@@ -52,7 +52,7 @@ class Game:
         ])
     def read_moves(self):
         try:
-            return pd.read_csv("moves.csv")
+            return pd.read_csv("moves.csv", index_col = 0)
         except FileNotFoundError:
             return pd.DataFrame(columns=[
                 "Game ID",
@@ -72,8 +72,8 @@ class Game:
     }
         
     def add_move(self, player, position):
-        game_id = len(self.savedGames)
-        moves = self.read_moves()
+        game_id = len(self.savedGames)+1
+        moves = self.savedMoves
         moves.loc[len(moves)] = {
             "Game ID": game_id,
             "Turn": self.turn,
@@ -135,7 +135,7 @@ class Game:
             y = move[1]
             self.board.set(x, y, self.currentPlayer.id)
             self.add_move(self.currentPlayer.name, move)
-        
+
             if self.turn > 3:
                 self.check_winner()
             if self.turn == 9 and self.winner is None:
@@ -154,18 +154,20 @@ class Player():
 
         
 class Human(Player):
-    name = input("Please input your name:")
-    type = "Human"
+    def __init__(self, id):
+        super().__init__(id)
+        self.name = input(f"Player {self.id}, please input your name:")
+        self.type = "Human"
     def get_move(self, board):
         x = int(input("which coloumn? left(1), middle(2), or right(3): "))
         y = int(input("Which row? up(1), middle(2), or down(3): "))
         nums = [1,2,3]
         if (x not in nums) or (y not in nums):
             print("Please only enter 1,2, or 3 for your x & y input.")
-            return self.get_move()
+            return self.get_move(board)
         if (board.is_filled(x-1,y-1)):
             print("Spot taken, please re-select!")
-            return self.get_move()
+            return self.get_move(board)
         print(f"{self.name} chose {x}, {y}")
         return [x-1, y-1]
         
