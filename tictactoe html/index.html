@@ -1,5 +1,5 @@
  <link rel = "stylesheet" href = style.css>
-<h1>Welcom To Tic Tac To</h1>
+<h1>Welcom to my Tic Tac Toe</h1>
 
 <form action="/get-game-mode" method="post">
     <fieldset>
@@ -11,31 +11,42 @@
         </div>
     
         <div>
-          <input type="radio" id="double" name="mode" value="double">
+          <input type="radio" id="double" name="mode" value="double" checked>
           <label for="double">Double Mode</label>
         </div>
-        
-        <div>
-            <button type="submit">Submit</button>
-          </div>
-        
-        <div>
-            <label for="user name">Please input name for player 1:</label>
-            <input type="text" id="name1" name="user_name" />
-        </div>
 
-        <div id = name2>
-            <label for="user name 2">Please input name for player 2:</label>
-            <input type="text" id="name2" name="user_name" />
-        </div>
+        
        
     </fieldset>
-
-    <ul>
-      <!-- <li>
-        <label for="User Name">Name:</label>
-        <input type="text" id="name" name="user_name" />
-      </li> -->
-      
-    </ul>
   </form>
+
+  <form id = "get-single-name" action = single-game-player, mode = post>
+    <div>
+      <label for="user name">Please input name for player 1:</label>
+      <input type="text" name="user_name1" />
+    </div>
+    
+    <div>
+      <button type="submit">Play</button>
+    </div>
+  </form>
+
+  <form id = "get-double-name" action = "double-game-player", mode = "post">
+    <div>
+      <label for="user name">Please input name for player 1:</label>
+      <input type="text" id="name1" name="user_name1" />
+    </div>
+
+    <div>
+      <label for="user name 2">Please input name for player 2:</label>
+      <input type="text" id="name2" name="user_name2" />
+    </div>
+    
+    <div>
+      <button type="submit">Play</button>
+    </div>
+  </form>
+
+  <style>
+
+  </style>
