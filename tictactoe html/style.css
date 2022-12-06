@@ -1,0 +1,20 @@
+form {
+    /* Center the form on the page */
+    margin: 0 auto;
+    width: 400px;
+    /* Form outline */
+    padding: 1em;
+    border: 1px solid #ccc;
+    border-radius: 1em;
+  }
+
+image {
+    width: 150;
+    height: 150;
+ }
+#name2 {
+    display: none
+}
+ #double:checked ~ #name2{
+    display: block
+ }
