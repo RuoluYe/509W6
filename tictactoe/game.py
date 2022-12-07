@@ -1,5 +1,5 @@
 ### object Game and player
-from board import Board
+from Board import Board
 import random
 import pandas as pd
 

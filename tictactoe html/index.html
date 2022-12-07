@@ -1,7 +1,8 @@
  <link rel = "stylesheet" href = style.css>
-<h1>Welcom to my Tic Tac Toe</h1>
+  
+  <h1>Welcom to my Tic Tac Toe</h1>
 
-<form action="/get-game-mode" method="post">
+  <form action="/get-game-mode" method="post">
     <fieldset>
         <legend>Select your game mode:</legend>
     
@@ -14,32 +15,30 @@
           <input type="radio" id="double" name="mode" value="double" checked>
           <label for="double">Double Mode</label>
         </div>
-
-        
        
     </fieldset>
+
   </form>
 
   <form id = "get-single-name" action = single-game-player, mode = post>
     <div>
-      <label for="user name">Please input name for player 1:</label>
-      <input type="text" name="user_name1" />
+      <label for="single user name">Please input name for player 1:</label>
+      <input type="text" name="single user name" />
     </div>
     
     <div>
       <button type="submit">Play</button>
     </div>
   </form>
-
   <form id = "get-double-name" action = "double-game-player", mode = "post">
     <div>
-      <label for="user name">Please input name for player 1:</label>
-      <input type="text" id="name1" name="user_name1" />
+      <label for="user name 1">Please input name for player 1:</label>
+      <input type="text" id="name1" name="user name" />
     </div>
 
     <div>
       <label for="user name 2">Please input name for player 2:</label>
-      <input type="text" id="name2" name="user_name2" />
+      <input type="text" id="name2" name="user name" />
     </div>
     
     <div>
@@ -47,6 +46,7 @@
     </div>
   </form>
 
-  <style>
-
-  </style>
+  <footer>
+    <p>Author: Ruolu Ye</p>
+    <p><a href="yeruolu@uw.edu">Contact Me</a></p>
+  </footer>

@@ -1,8 +1,13 @@
 /* for all  */
 h1 {
   text-align: center;
-  border: 10px;
-  border-color: black;
+}
+footer {
+  text-align: center;
+  margin-top: 100px;
+  padding: 3px;
+  background-color: lightblue;
+  color: white;
 }
 /* index.html */
 form {
@@ -12,20 +17,6 @@ form {
     border: 1px solid pink;
     border-radius: 1em;
   }
-
-  /* #get-single-name {
-  display: none; 
-}
-#get-double-name {
-  display: none;
-} */
-
-#single:checked ~ #get-single-name {
-  display: block;
-}
-#double:checked ~ #get-double-name {
-  display: block;
-}
 
  /* play.html */
 #board{
@@ -42,7 +33,6 @@ form {
  }
  .white {
   background-color: pink;
-  
  }
 
 
