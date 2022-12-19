@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+    <form method="GET">
+        <fieldset>
+            <legend>Select your game mode:</legend>
+        
+              <input type="radio" id="single" name="mode" value="single">
+              <label for="single">Single Mode (Against Bot)</label>
+            
+        
+              <input type="radio" id="double" name="mode" value="double" checked>
+              <label for="double">Double Mode</label>
+              
+              <input type = "submit", value = "Submit">
+           
+        </fieldset>
+    
+      </form>
+      <div>
+        {{ request.form }}
+    </div>
+</html>

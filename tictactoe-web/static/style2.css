@@ -1,0 +1,58 @@
+/* for all  */
+h1 {
+  text-align: center;
+}
+footer {
+  text-align: center;
+  margin-top: 100px;
+  padding: 3px;
+  background-color: lightblue;
+  color: white;
+}
+.username{
+  color: royalblue
+}
+/* index.html */
+form {
+    margin: 0 auto;
+    width: 400px;
+    padding: 1em;
+    border: 1px solid pink;
+    border-radius: 1em;
+  }
+
+ /* play.html */
+#board{
+  margin: auto;
+  border-style: groove;
+  border-color: pink;
+  align-self: center;
+  width: 400px;
+  height: 400px;
+}
+
+.black {
+  background-color: black;
+ }
+ .white {
+  background-color: pink;
+ }
+
+
+
+/* stat.html */
+.plot{
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
+
+
+image {
+  width: 150;
+  height: 150;
+}
+
+
+ 

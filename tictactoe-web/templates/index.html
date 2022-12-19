@@ -1,36 +1,38 @@
- <link rel = "stylesheet" href = style.css>
-  
+ <!DOCTYPE html>
+ <link rel = "stylesheet" href = ./static/style2.css>
+
+ <html>
   <h1>Welcom to my Tic Tac Toe</h1>
 
-  <form action="/get-game-mode" method="post">
+  <form action="http://localhost:5000/index" method="POST">
     <fieldset>
         <legend>Select your game mode:</legend>
     
-        <div>
+        
           <input type="radio" id="single" name="mode" value="single">
           <label for="single">Single Mode (Against Bot)</label>
-        </div>
+        
     
-        <div>
           <input type="radio" id="double" name="mode" value="double" checked>
           <label for="double">Double Mode</label>
-        </div>
+          
+          <input type = "hidden", value = "Submit">
        
     </fieldset>
 
   </form>
 
-  <form id = "get-single-name" action = single-game-player, mode = post>
+  <form id = "get-single-name" method = "post">
     <div>
       <label for="single user name">Please input name for player 1:</label>
       <input type="text" name="single user name" />
     </div>
     
     <div>
-      <button type="submit">Play</button>
+      <button type="submit"> Play </button>
     </div>
   </form>
-  <form id = "get-double-name" action = "double-game-player", mode = "post">
+  <!-- <form id = "get-double-name" action = "double-game-player", mode = "post">
     <div>
       <label for="user name 1">Please input name for player 1:</label>
       <input type="text" id="name1" name="user name" />
@@ -44,9 +46,12 @@
     <div>
       <button type="submit">Play</button>
     </div>
-  </form>
+  </form> -->
 
   <footer>
     <p>Author: Ruolu Ye</p>
     <p><a href="yeruolu@uw.edu">Contact Me</a></p>
   </footer>
+ </html>
+  
+  

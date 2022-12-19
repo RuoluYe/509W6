@@ -9,6 +9,9 @@ footer {
   background-color: lightblue;
   color: white;
 }
+.username{
+  color: royalblue
+}
 /* index.html */
 form {
     margin: 0 auto;
@@ -50,5 +53,6 @@ image {
   width: 150;
   height: 150;
 }
+
 
  
