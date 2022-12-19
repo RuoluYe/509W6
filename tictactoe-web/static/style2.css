@@ -33,13 +33,17 @@ form {
 
 .grid_0, .black {
   background-color: black;
+  color: white;
  }
 .grid_1, .white {
   background-color: pink;
  }
- td {
-  width: 127px;
- }
+
+.grid_1, .grid_0{
+ width: 127px;
+ text-align: center;
+}
+
 
 
 

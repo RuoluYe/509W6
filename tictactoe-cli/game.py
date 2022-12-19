@@ -33,6 +33,7 @@ class Game:
             print("We have a winner, " + self.winner.name + "!")
         else:
             print("There is a tie")
+            print(self.board)
         self.add_game()
         self.savedGames.to_csv("game.csv")
         self.savedMoves.to_csv("move.csv")
@@ -67,12 +68,16 @@ class Game:
             ])
     
     def add_game(self):
+        winner = "No One"
+        if (self.winner != None):
+            winner = self.winner.name
+        
         length = len(self.savedGames)
         self.savedGames.loc[length] = {
         "Game ID": length+1,
         "Player 1": self.player1.name, 
         "Player 2": self.player2.name, 
-        "Winner": self.winner.name,
+        "Winner": winner,
         "Turns taken": self.turn,
     }
         
