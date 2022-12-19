@@ -1,6 +1,5 @@
 # command line interface for the game. input & output here. 
-import logic
-import random
+
 from game import *
     
 
