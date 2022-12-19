@@ -31,10 +31,10 @@ form {
   height: 400px;
 }
 
-.black {
+.grid_0, .black {
   background-color: black;
  }
- .white {
+.grid_1, .white {
   background-color: pink;
  }
 
