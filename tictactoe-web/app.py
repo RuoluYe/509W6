@@ -9,19 +9,10 @@ app.secret_key = "ttt"
 def get_game_mode():
     session.pop("name", None)
     session.pop("board", None)
-    person = random.choice(["X","0"])
     if request.method == 'POST':
         name = request.form["single user name"]
         session["name"]= name
-        if "board" not in session:
-            session["board"] = [
-                [None, None, None],
-                [None, None, None],
-                [None, None, None]
-            ]
-            session["turn"] = person
-            session["winner"] = False
-            session["draw"] = False
+        
         return redirect(url_for("game"))
         # return render_template('game.html', name = name)
     else: 
@@ -34,14 +25,23 @@ def get_game_mode():
 
 @app.route('/game', methods = ["POST", "GET"])
 def game():
-    
+    if "board" not in session:
+            person = random.choice(["X","0"])
+            session["board"] = [
+                [None, None, None],
+                [None, None, None],
+                [None, None, None]
+            ]
+            session["turn"] = person
+            session["winner"] = False
+            session["draw"] = False
     
     winner = get_winner(session["board"])
+
         
     if "name" in session:
         name = session["name"]
-        return render_template('game.html', name = name)
-        # return render_template('game.html', name = name, game = session["board"], turn=session["turn"], winner = winner)
+        return render_template('game.html', name = name,  game = session["board"], turn = session["turn"], winner = winner)
     else:
         return redirect(url_for("get_game_mode"))
 
@@ -97,14 +97,14 @@ def debug():
         turn = session["turn"]
     return render_template('debug.html', game = session["board"], turn = turn)
 
-@app.route("/game/<int:row>/<int:col>")
+@app.route("/play/<int:row>/<int:col>")
 def play(row, col):
     session["board"][row][col] = session["turn"]
     if session["turn"] == "X":
         session["turn"] = "0"
     else:
         session["turn"] = "X"
-    return redirect(url_for('debug'))
+    return redirect(url_for('game'))
     
 if __name__ == "__main__":
     app.run(debug = True)

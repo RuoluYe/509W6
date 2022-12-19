@@ -6,26 +6,28 @@
         <title>Tic Tac Toe</title>
     </head>
     <h1> Tic Tac Toe Board, hi {{ name }}</h1>
+    {% if winner %}
+    <div>
+        <h1> Winner is {{winner}}</h1>
+    </div>
+    {% endif %}
     <body>
         <div>
             <table id = "board">
-                <tr>
-                    <td class="black" id = tl> </td>
-                    <td class="white" id = tm> </td>
-                    <td class="black" id = tr> </td>
-                </tr>
-                <tr>
-                    <td class="white" id = ml> </td>
-                    <td class="black" id = mm> </td>
-                    <td class="white" id = mr> </td>
-                </tr>
-                <tr>
-                    <td class="black" id = ll> </td>
-                    <td class="white" id = lm> </td>
-                    <td class="black" id = lr> </td>
-                </tr>
-            
-            </table>
+                {% for i in range(3) %}
+                    <tr>
+                        {% for j in range(3) %}
+                            <td class = "grid_{{(i+j)%2}}">
+                                  {% if game[i][j] %}
+                                      {{ game[i][j] }}
+                                  {% else %}
+                                      <a href="{{ url_for('play', row=i, col = j)}}">Play {{ turn }} here.</a>
+                                  {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+              </table>
         </div>
     </body>
 </html>

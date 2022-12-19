@@ -37,6 +37,9 @@ form {
 .grid_1, .white {
   background-color: pink;
  }
+ td {
+  width: 127px;
+ }
 
 
 
